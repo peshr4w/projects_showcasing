@@ -186,24 +186,10 @@
 
             <!-- Right Column: Gallery -->
             <section class="lg:col-span-8 flex flex-col gap-6">
-                <!-- Gallery Filter and Header -->
-                <div class="bg-white/85 custom-blur border border-slate-100 rounded-3xl p-6 shadow-xl shadow-slate-100/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900">Project Gallery</h2>
-                        <p class="text-xs text-slate-500 mt-0.5">Browse screenshots. Click to open full details and zoom.</p>
-                    </div>
-                    <!-- Category Tabs -->
-                    <div class="flex bg-slate-100/80 p-1 rounded-xl self-start sm:self-auto">
-                        <button onclick="filterCategory('all')" data-tab="all" class="px-4 py-2 text-sm font-semibold rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300">
-                            All
-                        </button>
-                        <button onclick="filterCategory('ui')" data-tab="ui" class="px-4 py-2 text-sm font-medium rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all duration-300">
-                            User Interface
-                        </button>
-                        <button onclick="filterCategory('admin')" data-tab="admin" class="px-4 py-2 text-sm font-medium rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all duration-300">
-                            Admin Panel
-                        </button>
-                    </div>
+                <!-- Gallery Header -->
+                <div class="bg-white/85 custom-blur border border-slate-100 rounded-3xl p-6 shadow-xl shadow-slate-100/50">
+                    <h2 class="text-xl font-bold text-slate-900">Project Gallery</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Browse screenshots. Click to open full details and zoom.</p>
                 </div>
 
                 <!-- Screenshots Grid -->
@@ -721,10 +707,9 @@
             });
         }
 
-        // Return current active images based on selected tab
+        // Return active images
         function getActiveImages() {
-            const activeTab = document.querySelector('[data-tab].bg-blue-600').getAttribute('data-tab');
-            return lightboxImages.filter(item => activeTab === 'all' || item.cardElement.getAttribute('data-category') === activeTab);
+            return lightboxImages;
         }
 
         function openLightbox(element) {
@@ -912,38 +897,7 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // Filter categories
-        function filterCategory(category) {
-            // Update tabs
-            const tabs = document.querySelectorAll('[data-tab]');
-            tabs.forEach(tab => {
-                if (tab.getAttribute('data-tab') === category) {
-                    tab.className = "px-4 py-2 text-sm font-semibold rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20 transition-all duration-300";
-                } else {
-                    tab.className = "px-4 py-2 text-sm font-medium rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all duration-300";
-                }
-            });
-
-            // Filter grid items
-            const items = document.querySelectorAll('[data-gallery-item]');
-            items.forEach(item => {
-                const itemCat = item.getAttribute('data-category');
-                if (category === 'all' || itemCat === category) {
-                    item.classList.remove('hidden');
-                    // Smooth visual entry
-                    setTimeout(() => {
-                        item.style.opacity = '1';
-                        item.style.transform = 'scale(1)';
-                    }, 50);
-                } else {
-                    item.style.opacity = '0';
-                    item.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        item.classList.add('hidden');
-                    }, 150);
-                }
-            });
-        }
+        // Tab filtering removed as requested
     </script>
 </body>
 
